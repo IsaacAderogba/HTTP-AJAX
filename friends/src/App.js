@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import FriendList from "./components/FriendList";
+import AddFriend from './components/AddFriend';
 import axios from "axios";
 import "./App.css";
 
@@ -32,6 +33,8 @@ function App() {
       {spinner && <div>Loading...</div>}
       {errorMessage && <div>{errorMessage}</div>}
       {friends && <FriendList friends={friends} />}
+      <hr />
+      <AddFriend />
     </div>
   );
 }
