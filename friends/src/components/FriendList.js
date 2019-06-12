@@ -3,6 +3,7 @@ import styled from "styled-components";
 import Friend from "./Friend";
 
 const FriendList = ({ friends }) => {
+    console.log(friends);
   return (
     <StyledFriendList>
       <h1>Friends List</h1>

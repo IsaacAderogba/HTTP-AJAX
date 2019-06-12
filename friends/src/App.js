@@ -28,13 +28,19 @@ function App() {
     fetchFriends();
   }, []);
 
+  const addFriend = (name, age, email) => {
+    const newFriend = {name, age, email, id: friends.length + 1}
+    const newFriends = [...friends, newFriend];
+    setFriends(newFriends);
+  }
+
   return (
     <div className="App">
       {spinner && <div>Loading...</div>}
       {errorMessage && <div>{errorMessage}</div>}
       {friends && <FriendList friends={friends} />}
       <hr />
-      <AddFriend />
+      <AddFriend addFriend={addFriend} />
     </div>
   );
 }
