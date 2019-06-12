@@ -9,6 +9,9 @@ const AddFriend = ({ addFriend }) => {
   const onSubmitForm = event => {
     event.preventDefault();
     addFriend(name, age, email);
+    setName("");
+    setAge("");
+    setEmail("");
   };
 
   return (
