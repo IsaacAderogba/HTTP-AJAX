@@ -4,7 +4,7 @@ import axios from "axios";
 import "./App.css";
 
 function App() {
-  const [friend, setFriend] = useState(null);
+  const [friends, setFriends] = useState(null);
   const [spinner, setSpinner] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -13,7 +13,7 @@ function App() {
     axios
       .get("http://localhost:5000/friends")
       .then(response => {
-        setFriend(response.data);
+        setFriends(response.data);
       })
       .catch(error => {
         setErrorMessage(error.message);
@@ -31,7 +31,7 @@ function App() {
     <div className="App">
       {spinner && <div>Loading...</div>}
       {errorMessage && <div>{errorMessage}</div>}
-      {friend && <FriendList />}
+      {friends && <FriendList friends={friends} />}
     </div>
   );
 }
