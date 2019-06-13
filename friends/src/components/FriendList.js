@@ -2,19 +2,26 @@ import React from "react";
 import styled from "styled-components";
 import Friend from "./Friend";
 
-const FriendList = ({ friends, selectFriend }) => {
+const FriendList = ({ friends, selectFriend, deleteFriend }) => {
   console.log(friends);
   return (
-    <StyledFriendList >
+    <StyledFriendList>
       <h1>Friends List</h1>
       <div className="headings">
         <p>Name</p>
         <p>Age</p>
         <p>Email</p>
-        <p></p>
+        <p />
       </div>
       {friends.map(friend => {
-        return <Friend  selectFriend={selectFriend} friend={friend} key={friend.id} />;
+        return (
+          <Friend
+            selectFriend={selectFriend}
+            deleteFriend={deleteFriend}
+            friend={friend}
+            key={friend.id}
+          />
+        );
       })}
     </StyledFriendList>
   );

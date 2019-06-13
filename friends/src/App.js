@@ -11,6 +11,10 @@ function App() {
   const [spinner, setSpinner] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 
+  useEffect(() => {
+    fetchFriends();
+  }, []);
+
   const fetchFriends = () => {
     setSpinner(true);
     axios
@@ -26,12 +30,13 @@ function App() {
       });
   };
 
-  useEffect(() => {
-    fetchFriends();
-  }, []);
-
   const selectFriend = id => {
     setSelectedFriend(friends.find(fr => fr.id === id));
+  };
+
+  const postNewFriend = (name, age, email) => {
+    const newFriend = { name, age: parseInt(age), email };
+    axios.post(friendsApi, newFriend).then(() => fetchFriends());
   };
 
   const updateFriend = (id, name, age, email) => {
@@ -40,16 +45,21 @@ function App() {
     setSelectedFriend(null);
   };
 
-  const postNewFriend = (name, age, email) => {
-    const newFriend = { name, age: parseInt(age), email };
-    axios.post(friendsApi, newFriend).then(() => fetchFriends());
+  const deleteFriend = id => {
+    axios.delete(`${friendsApi}/${id}`).then(() => fetchFriends());
   };
 
   return (
     <div className="App">
       {spinner && <div>Loading...</div>}
       {errorMessage && <div>{errorMessage}</div>}
-      {friends && <FriendList friends={friends} selectFriend={selectFriend} />}
+      {friends && (
+        <FriendList
+          friends={friends}
+          selectFriend={selectFriend}
+          deleteFriend={deleteFriend}
+        />
+      )}
       <hr />
       <FriendBuilder
         postNewFriend={postNewFriend}
