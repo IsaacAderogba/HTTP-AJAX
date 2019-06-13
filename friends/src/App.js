@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { Route, Link } from "react-router-dom";
+import axios from "axios";
+
+import NavBar from "./components/NavBar";
 import FriendList from "./components/FriendList";
 import FriendBuilder from "./components/FriendBuilder";
-import axios from "axios";
 import "./App.css";
 
 const friendsApi = "http://localhost:5000/friends";
 function App() {
   const [friends, setFriends] = useState(null);
   const [selectedFriend, setSelectedFriend] = useState(null);
-  const [spinner, setSpinner] = useState(false);
+  const [spinner, setSpinner] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
@@ -49,25 +52,41 @@ function App() {
     axios.delete(`${friendsApi}/${id}`).then(() => fetchFriends());
   };
 
-  return (
-    <div className="App">
-      {spinner && <div>Loading...</div>}
-      {errorMessage && <div>{errorMessage}</div>}
-      {friends && (
-        <FriendList
-          friends={friends}
-          selectFriend={selectFriend}
-          deleteFriend={deleteFriend}
+  if (spinner) {
+    return <div>Loading...</div>;
+  } else {
+    return (
+      <div className="App">
+        <NavBar />
+
+        {errorMessage && <div>{errorMessage}</div>}
+        {friends && (
+          <Route
+            path="/"
+            render={routeProps => (
+              <FriendList
+                {...routeProps}
+                friends={friends}
+                selectFriend={selectFriend}
+                deleteFriend={deleteFriend}
+              />
+            )}
+          />
+        )}
+        <Route
+          path="/friends_builder"
+          render={routeProps => (
+            <FriendBuilder
+              {...routeProps}
+              postNewFriend={postNewFriend}
+              selectedFriend={selectedFriend}
+              updateFriend={updateFriend}
+            />
+          )}
         />
-      )}
-      <hr />
-      <FriendBuilder
-        postNewFriend={postNewFriend}
-        selectedFriend={selectedFriend}
-        updateFriend={updateFriend}
-      />
-    </div>
-  );
+      </div>
+    );
+  }
 }
 
 export default App;
