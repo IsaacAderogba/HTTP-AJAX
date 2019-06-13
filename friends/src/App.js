@@ -5,7 +5,7 @@ import axios from "axios";
 import NavBar from "./components/NavBar";
 import FriendList from "./components/FriendList";
 import FriendBuilder from "./components/FriendBuilder";
-import PageLoader from "./components/PageLoader"
+import PageLoader from "./components/PageLoader";
 import "./App.css";
 
 const friendsApi = "http://localhost:5000/friends";
@@ -16,11 +16,11 @@ function App() {
   const [errorMessage, setErrorMessage] = useState(null);
 
   useEffect(() => {
+    setSpinner(true);
     fetchFriends();
   }, []);
 
   const fetchFriends = () => {
-    setSpinner(true);
     axios
       .get(friendsApi)
       .then(response => {
@@ -54,7 +54,11 @@ function App() {
   };
 
   if (spinner) {
-    return <div><PageLoader /></div>;
+    return (
+      <div>
+        <PageLoader />
+      </div>
+    );
   } else {
     return (
       <div className="App">
