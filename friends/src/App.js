@@ -4,6 +4,7 @@ import AddFriend from './components/AddFriend';
 import axios from "axios";
 import "./App.css";
 
+const friendsApi = "http://localhost:5000/friends";
 function App() {
   const [friends, setFriends] = useState(null);
   const [spinner, setSpinner] = useState(false);
@@ -12,7 +13,7 @@ function App() {
   const fetchFriends = () => {
     setSpinner(true);
     axios
-      .get("http://localhost:5000/friends")
+      .get(friendsApi)
       .then(response => {
         setFriends(response.data);
       })
@@ -24,14 +25,16 @@ function App() {
       });
   };
 
+ 
+
   useEffect(() => {
     fetchFriends();
   }, []);
 
-  const addFriend = (name, age, email) => {
-    const newFriend = {name, age, email, id: friends.length + 1}
-    const newFriends = [...friends, newFriend];
-    setFriends(newFriends);
+  const postNewFriend = (name, age, email) => {
+    const newFriend = {name, age, email}
+    axios.post(friendsApi, newFriend)
+      .then(() => fetchFriends());
   }
 
   return (
@@ -40,7 +43,7 @@ function App() {
       {errorMessage && <div>{errorMessage}</div>}
       {friends && <FriendList friends={friends} />}
       <hr />
-      <AddFriend addFriend={addFriend} />
+      <AddFriend postNewFriend={postNewFriend} />
     </div>
   );
 }

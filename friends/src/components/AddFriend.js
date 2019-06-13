@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 
-const AddFriend = ({ addFriend }) => {
+const AddFriend = ({ postNewFriend }) => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
 
   const onSubmitForm = event => {
     event.preventDefault();
-    addFriend(name, age, email);
+    postNewFriend(name, age, email);
     setName("");
     setAge("");
     setEmail("");
