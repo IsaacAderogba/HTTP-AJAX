@@ -1,14 +1,24 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-const AddFriend = ({ postNewFriend }) => {
+const FriendBuilder = ({ postNewFriend, selectedFriend, updateFriend }) => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
 
+  useEffect(() => {
+    setName(selectedFriend ? selectedFriend.name : "");
+    setAge(selectedFriend ? selectedFriend.age : "");
+    setEmail(selectedFriend ? selectedFriend.email : "");
+  }, [selectedFriend]);
+
   const onSubmitForm = event => {
     event.preventDefault();
-    postNewFriend(name, age, email);
+    if (selectedFriend) {
+      updateFriend(selectedFriend.id, name, age, email);
+    } else {
+      postNewFriend(name, age, email);
+    }
     setName("");
     setAge("");
     setEmail("");
@@ -16,7 +26,7 @@ const AddFriend = ({ postNewFriend }) => {
 
   return (
     <StyledAddFriend onSubmit={onSubmitForm}>
-      <h1>Add Friend</h1>
+      {selectedFriend ? <h1>Update Friend</h1> : <h1>Add Friend</h1>}
       <div>
         <p>Name:</p>
         <input
@@ -44,12 +54,12 @@ const AddFriend = ({ postNewFriend }) => {
           onChange={e => setEmail(e.target.value)}
         />
       </div>
-      <button>Add Friend</button>
+      {selectedFriend ? <button>Update</button> : <button>Add</button>}
     </StyledAddFriend>
   );
 };
 
-export default AddFriend;
+export default FriendBuilder;
 
 const StyledAddFriend = styled.form`
     max-width: 400px;

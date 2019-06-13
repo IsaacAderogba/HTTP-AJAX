@@ -1,8 +1,8 @@
 import React from "react";
 
-const Friend = ({friend}) => {
+const Friend = ({friend, selectFriend}) => {
     return (
-        <div>
+        <div onClick={() => selectFriend(friend.id)}>
           <p>{friend.name}</p>
           <p>{friend.age}</p>
           <p>{friend.email}</p>

@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import Friend from "./Friend";
 
-const FriendList = ({ friends }) => {
+const FriendList = ({ friends, selectFriend }) => {
   console.log(friends);
   return (
     <StyledFriendList>
@@ -13,7 +13,7 @@ const FriendList = ({ friends }) => {
         <p>Email</p>
       </div>
       {friends.map(friend => {
-        return <Friend friend={friend} key={friend.id} />;
+        return <Friend selectFriend={selectFriend} friend={friend} key={friend.id} />;
       })}
     </StyledFriendList>
   );
