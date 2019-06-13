@@ -4,18 +4,16 @@ import { Link } from "react-router-dom";
 
 const Friend = ({ friend, selectFriend, deleteFriend }) => {
   return (
-    <Link to="/friends_builder">
-      <StyledFriend id={friend.id} onClick={() => selectFriend(friend.id)}>
-        <p>{friend.name}</p>
-        <p>{friend.age}</p>
-        <p>{friend.email}</p>
+    <StyledFriend id={friend.id} onClick={() => selectFriend(friend.id)}>
+        <p><Link to="/friends_builder">{friend.name}</Link></p>
+        <p><Link to="/friends_builder">{friend.age}</Link></p>
+        <p><Link to="/friends_builder">{friend.email}</Link></p>
         <p>
           <i onClick={() => deleteFriend(friend.id)} className="material-icons">
             delete
           </i>
         </p>
       </StyledFriend>
-    </Link>
   );
 };
 
