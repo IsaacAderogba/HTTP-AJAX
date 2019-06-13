@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 import axios from "axios";
 
 import NavBar from "./components/NavBar";
@@ -62,6 +62,7 @@ function App() {
         {errorMessage && <div>{errorMessage}</div>}
         {friends && (
           <Route
+            exact
             path="/"
             render={routeProps => (
               <FriendList
