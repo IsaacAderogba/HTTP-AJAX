@@ -1,7 +1,13 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Redirect } from "react-router-dom";
 
-const FriendBuilder = ({ postNewFriend, selectedFriend, updateFriend }) => {
+const FriendBuilder = ({
+  postNewFriend,
+  selectedFriend,
+  updateFriend,
+  history
+}) => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
@@ -19,6 +25,7 @@ const FriendBuilder = ({ postNewFriend, selectedFriend, updateFriend }) => {
     } else {
       postNewFriend(name, age, email);
     }
+    history.push("/");
     setName("");
     setAge("");
     setEmail("");
@@ -83,8 +90,9 @@ const StyledAddFriend = styled.form`
         width: 200px;
         padding: 8px 0px;
         font-size: 16px;
-        background-color: black;
+        background-color: #313131;
         color: white;
         border-radius: 4px;
+        cursor: pointer;
     }
 `;
