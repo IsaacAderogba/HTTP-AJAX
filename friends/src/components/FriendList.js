@@ -2,8 +2,8 @@ import React from "react";
 import styled from "styled-components";
 import Friend from "./Friend";
 
-const FriendList = ({ friends }) => {
-    console.log(friends);
+const FriendList = ({ friends, selectFriend, deleteFriend }) => {
+  console.log(friends);
   return (
     <StyledFriendList>
       <h1>Friends List</h1>
@@ -11,9 +11,17 @@ const FriendList = ({ friends }) => {
         <p>Name</p>
         <p>Age</p>
         <p>Email</p>
+        <p />
       </div>
       {friends.map(friend => {
-        return <Friend friend={friend} key={friend.id} />;
+        return (
+          <Friend
+            selectFriend={selectFriend}
+            deleteFriend={deleteFriend}
+            friend={friend}
+            key={friend.id}
+          />
+        );
       })}
     </StyledFriendList>
   );
@@ -29,7 +37,8 @@ const StyledFriendList = styled.div`
     p {
       flex: 1;
       text-align: center;
-      margin-bottom: 8px;
+      margin: 0;
+      padding: 12px 0px;
     }
   }
   .headings p {

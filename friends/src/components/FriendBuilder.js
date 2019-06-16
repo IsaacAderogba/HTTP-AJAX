@@ -1,14 +1,31 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components";
+import { Redirect } from "react-router-dom";
 
-const AddFriend = ({ addFriend }) => {
+const FriendBuilder = ({
+  postNewFriend,
+  selectedFriend,
+  updateFriend,
+  history
+}) => {
   const [name, setName] = useState("");
   const [age, setAge] = useState("");
   const [email, setEmail] = useState("");
 
+  useEffect(() => {
+    setName(selectedFriend ? selectedFriend.name : "");
+    setAge(selectedFriend ? selectedFriend.age : "");
+    setEmail(selectedFriend ? selectedFriend.email : "");
+  }, [selectedFriend]);
+
   const onSubmitForm = event => {
     event.preventDefault();
-    addFriend(name, age, email);
+    if (selectedFriend) {
+      updateFriend(selectedFriend.id, name, age, email);
+    } else {
+      postNewFriend(name, age, email);
+    }
+    history.push("/");
     setName("");
     setAge("");
     setEmail("");
@@ -16,7 +33,7 @@ const AddFriend = ({ addFriend }) => {
 
   return (
     <StyledAddFriend onSubmit={onSubmitForm}>
-      <h1>Add Friend</h1>
+      {selectedFriend ? <h1>Update Friend</h1> : <h1>Add Friend</h1>}
       <div>
         <p>Name:</p>
         <input
@@ -44,12 +61,12 @@ const AddFriend = ({ addFriend }) => {
           onChange={e => setEmail(e.target.value)}
         />
       </div>
-      <button>Add Friend</button>
+      {selectedFriend ? <button>Update</button> : <button>Add</button>}
     </StyledAddFriend>
   );
 };
 
-export default AddFriend;
+export default FriendBuilder;
 
 const StyledAddFriend = styled.form`
     max-width: 400px;
@@ -73,8 +90,9 @@ const StyledAddFriend = styled.form`
         width: 200px;
         padding: 8px 0px;
         font-size: 16px;
-        background-color: black;
+        background-color: #313131;
         color: white;
         border-radius: 4px;
+        cursor: pointer;
     }
 `;
